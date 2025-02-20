@@ -26,3 +26,9 @@ func main() {
 		fmt.Println(num, "has multiple digits")
 	}
 }
+
+// you can have an if statement wihout an else.
+// logical operators like && and || are often useful in conditiosn
+// a statement can precede contiditonals; any variables declared in this statements are-
+//+ available in the current and all subsequent branches.
+// note that you don't need paranheses around conditions in Go, but that the braces are required.
