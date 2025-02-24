@@ -26,6 +26,7 @@ func main() {
 fmt.Printf("Hello, world!")
 
 }
+Çıktı:
 ```
 ______
 ```golang
