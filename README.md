@@ -65,3 +65,14 @@ vname1, vname2, vname3 := v1, v2, v3
 ```golang
 _, b := 34, 35
 ```
+
+# Constants (Sabitler)
+
+Derleme sırasında belirlenen değerlerdir ve runtime sürecinde değiştiremeyeceğimiz değerlerdir.
+Go'da sabit türleri olarak sayı, boolean veya dize kullanabiliriz.
+
+````golang
+const constantName = value
+// gerektiğinde sabit türlerini atlayabiliriz
+const Pi float32= 3.1415926
+```
