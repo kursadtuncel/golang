@@ -55,5 +55,7 @@ var vname1, vname2, vname3 = v1, v2, v3
 
 // ':=' kullanarak hızlı atama yapabiliriz, bu yalnızca fonksiyon içinde geçerlidir.
 vname1, vname2, vname3 := v1, v2, v3
+
+// **Fonksiyon dışında kullanmaya çalışırsak derleme hatası alırız. Bu nedenle global değişkenleri tanımlamak için kullanmalıyız.**
 ````
 
