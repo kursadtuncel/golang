@@ -18,9 +18,16 @@ Elbette, Hello World ile Go'ya giriş yapıyoruz.
 
 ```golang
 package main
+
 import "fmt"
+
 func main() {
+    
 fmt.Printf("Hello, world!")
+
 }
 ```
+
+<br>
+____
 
