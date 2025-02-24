@@ -133,7 +133,8 @@ funct test() {
 ```
 
 String değerlerini index'e göre değiştirmek imkansızdır. Aşağıdaki kodu derlerseniz, hata alırsınız:
-````golang
+```golang
 var s string = "Hello"
 s[0] = 'c'
+
 ```
