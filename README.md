@@ -36,7 +36,7 @@ ___
 
 # Değişkenler (Variables)
 
-Temel şekilde 'var' ile değişken atıyoruz. Go'da değişken türünü değişken adından sonra koyduğuna dikkat edin.
+Temel şekilde **var** ile değişken atıyoruz. Go'da değişken türünü değişken adından sonra belirttiğimize dikkat edin.
 
 ```golang
 var variableName type
