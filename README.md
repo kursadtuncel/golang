@@ -28,11 +28,10 @@ fmt.Printf("Hello, world!")
 }
 ```
 Çıktı:
-______
 ```golang
 Hello, world!
 ```
-
+___
 <br>
 
 #
