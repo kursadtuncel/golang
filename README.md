@@ -68,7 +68,7 @@ _, b := 34, 35
 
 # Constants (Sabitler)
 
-Derleme sırasında belirlenen değerlerdir ve runtime sürecinde değiştiremeyeceğimiz değerlerdir.
+Derleme sırasında belirlenen ve runtime(çalışma) sürecinde değiştiremeyeceğimiz değerlerdir.
 Go'da sabit türleri olarak sayı, boolean veya dize kullanabiliriz.
 
 ````golang
@@ -76,3 +76,6 @@ const constantName = value
 // gerektiğinde sabit türlerini atlayabiliriz
 const Pi float32= 3.1415926
 ```
+
+# Elementary Types (Veri Tipleri)
+
