@@ -1,12 +1,11 @@
 
-# Go'yu diğer dillerden ayıran şey nedir?
+# Neden Go?
 
-Go, büyük bir ekipte büyük ölçekli kitleler için ölçeklenebilir web uygulamaları inşa edebilmek için geliştirildi.
-Bu yüzden Go dili geliştirilirken mümkün olduğunca standart hale getirildi, bu nedenle gofmt aracı ve dilin katı kullanım
-yönergeleri geliştirici tabanında iki fraksiyon olmaması içindir.
+Go, büyük ve için ölçeklenebilir web uygulamaları inşa edebilmek için geliştirildi.
+Bu yüzden Golang geliştirilirken mümkün olduğunca standart hale getirildi, gofmt aracı ve dilin katı kullanım sebebi de geliştirici tabanında iki fraksiyon olmaması içindir.
 <br>
 
-# Başlıklar
+# Başlıklar:
 
 *[Hello World](#hello-world)
 
