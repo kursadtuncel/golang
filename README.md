@@ -27,7 +27,12 @@ fmt.Printf("Hello, world!")
 
 }
 ```
+______
+```golang
+Hello, world!
+```
 
 <br>
-____
+
+#
 
