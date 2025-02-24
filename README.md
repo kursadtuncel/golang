@@ -58,5 +58,10 @@ vname1, vname2, vname3 := v1, v2, v3
 
 // Fonksiyon dışında kullanmaya çalışırsak derleme hatası alırız.
 // Bu nedenle global değişkenleri tanımlamak için kullanmalıyız.
-````
 
+````
+**_(blank)** özel bir değişkendir. Buna verilen herhangi bir değer göz ardı edilecektir. Örneğin, b ye 35 veririz ve 34 ü atarız. Bu örnek sadece nasıl çalıştığını gösterir. Burada işe yaramaz görünüyor çünkü genellikle fonksiyon dönüş değerlerini aldığımızda bu sembolü kullanırız.
+
+```golang
+_, b := 34, 35
+```
