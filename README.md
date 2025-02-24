@@ -26,8 +26,8 @@ func main() {
 fmt.Printf("Hello, world!")
 
 }
-Çıktı:
 ```
+Çıktı:
 ______
 ```golang
 Hello, world!
