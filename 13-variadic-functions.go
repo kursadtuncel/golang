@@ -1,26 +1,26 @@
 package main
 
+// değişkenli (variadic) fonksiyonlar herhangi sayıda ardışık argümanla çağrılabilir.
+// örneğin fmt.Println yaygın bir değişkenli fonksiyondur.
+
 import "fmt"
 
-func sum(nums ...int) {
+func sum(nums ...int) { // argüman olarak rastgele sayıda int alacak bir fonksiyon
 	fmt.Print(nums, " ")
 	total := 0
 
-	for _, num := range nums {
+	for _, num := range nums { // fonksiyon içerisinde num tipi []int'e eşdeğerdir.
+		// len(nums)'ı çağırabilir, range ile üzerinde iterasyon yapabiliriz.
 		total += num
 	}
 	fmt.Println(total)
 }
 
 func main() {
-	sum(1, 2)
+	sum(1, 2) // değişkenli fonksiyonlar, her zamanki gibi, ayrı argümanlarla çağırılabilir.
 	sum(1, 2, 3)
 
-	nums := []int{1, 2, 3, 4}
+	nums := []int{1, 2, 3, 4} // bir dilimde birden fazla argümanınız varsa, bunları func(slice...) kullanarak
+	// değişkenli bir fonksiyona bu şekilde uygulayabiliriz:
 	sum(nums...)
 }
-
-//here's a function that will take an arbitrary number of ints as arguments.
-//within the function, the type of nums is equivalent to [] int. we can call len(nums), iterate over it with range, etc.
-//variadic functions can be called in the usual way with individual arguments.
-//if you already have multiple args in a slice, apply them to a variadic function using func(slice...) like this.

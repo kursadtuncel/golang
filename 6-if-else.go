@@ -10,15 +10,16 @@ func main() {
 		fmt.Println("7 is odd")
 	}
 
-	if 8%4 == 0 {
+	if 8%4 == 0 { // else ifadesi olmadan da if ifadesini kullanabiliriz.
 		fmt.Println("8 is divisible by 4")
 	}
 
-	if 8%2 == 0 || 7%2 == 0 {
+	if 8%2 == 0 || 7%2 == 0 { // && ve || gibi mantıksal operatörler koşullarda çok kullanışlıdır.
 		fmt.Println("either 8 or 7 are even")
 	}
 
-	if num := 9; num < 0 {
+	if num := 9; num < 0 { // Bir ifade koşullu ifadelerden önce gelebilir;
+		// bu ifadede bildirilen tüm değişkenler geçerlidir ve sonraki tüm dallarda kullanılabilir.
 		fmt.Println(num, "is negative")
 	} else if num < 10 {
 		fmt.Println(num, "has 1 digit")
@@ -27,8 +28,4 @@ func main() {
 	}
 }
 
-// you can have an if statement wihout an else.
-// logical operators like && and || are often useful in conditiosn
-// a statement can precede contiditonals; any variables declared in this statements are-
-//+ available in the current and all subsequent branches.
-// note that you don't need paranheses around conditions in Go, but that the braces are required.
+// Go'da koşulların etrafında parantezlere ihtiyacınız olmadığını, ancak süslü parantezlerin zorunlu olduğunu unutmayın.

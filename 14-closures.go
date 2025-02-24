@@ -1,8 +1,11 @@
 package main
 
+// go, iç içe fonksiyonlar oluşturabilen anonim fonksiyonları destekler.
+
 import "fmt"
 
-func intSeq() func() int {
+func intSeq() func() int { // bu intSeq fonksiyonu, intSeq'in gövdesinde anonim olarak tanımladığımız
+	// başka bir fonksiyonu döndürür. döndürülen fonksiyon, bir kapanış oluşturmak için i değişkeni üzerinde kapanır.
 	i := 0
 	return func() int {
 		i++
@@ -20,11 +23,3 @@ func main() {
 	newInts := intSeq()
 	fmt.Println(newInts())
 }
-
-// this function intSeq return another function, which we define anonymously in the body of intSeq.
-// the returned function closees over the variable i to form a clouse.
-
-//we call intSeq, assigning the result (a function) to nextInt. this function value captures its own-
-//+ i value which will be updated each time we call nextInt.
-//see the eeffect of the closuree by calling nextInt a few times.
-//to confirm that the state is unique to that particular function, create and test a new one.

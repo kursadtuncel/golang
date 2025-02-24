@@ -17,14 +17,15 @@ func main() {
 		fmt.Println("three")
 	}
 
-	switch time.Now().Weekday() {
+	switch time.Now().Weekday() { // Aynı case ifadesinde birden fazla ifadeyi ayırmak için virgül kullanabiliriz.
 	case time.Saturday, time.Sunday:
 		fmt.Println("It's the weekend")
 	default:
 		fmt.Println("It's a weekday")
 	}
 
-	t := time.Now()
+	t := time.Now() // "switch" ifadesi olmadan if/else mantığını ifade etmenin alternatif bir yoludur.
+	//Burada ayrıca case ifadelerinin sabit olmayan ifadeler olabileceğini de gösteriyoruz.
 	switch {
 	case t.Hour() < 12:
 		fmt.Println("It's before noon")
@@ -33,6 +34,7 @@ func main() {
 	}
 
 	whatAmI := func(i interface{}) {
+		// switch, değerler yerine türleri karşılaştırır. bunu  bir arayüz değerinin türünü öğrenmek için kullanabiliriz.
 		switch t := i.(type) {
 		case bool:
 			fmt.Println("I'm a bool")
@@ -40,13 +42,10 @@ func main() {
 			fmt.Println("I'm an int")
 		default:
 			fmt.Printf("Don't know type %T\n", t)
+			// bu örnekte t değişkeni, kendisine karşılık gelen türe sahip olacaktır.
 		}
 	}
 	whatAmI(true)
 	whatAmI(1)
 	whatAmI("hey")
 }
-
-// you can use commas to seperate multiple expressions in the same case statement. we use the optional default case in this example as well.
-// switch without an expression is an alternate way to express if/else logic. Here we also show how the case expressions can be non-constants.
-// A type switch compares types instead of values. You can use this to discover the type of an interface value. In this example, the variable t will have the type corresponding to its clause.

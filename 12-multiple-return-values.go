@@ -1,21 +1,20 @@
 package main
 
+// go'da multiple return değerleri kullanılır. bu özellik, örneğin bir fonksiyondan
+// hem sonuç hem de hata değerlerini döndürmek için sıklıkla kullanılır.
+
 import "fmt"
 
-func vals() (int, int) {
+func vals() (int, int) { // buradaki (int, int) fonksiyonunun 2 int döndürdüğünü gösterir.
 	return 3, 7
 }
 
-func main() {
+func main() { // burada call'dan gelen 2 farklı return değerini multiple assignment(çoklu atama) ile kullanıyoruz.
+
 	a, b := vals()
 	fmt.Println(a)
 	fmt.Println(b)
 
-	_, c := vals()
+	_, c := vals() // yalnızca döndürülen değerlerin bir alt kümesini istiyorsak, boş tanımlayıcı "_" kullanın.
 	fmt.Println(c)
 }
-
-// the (int, int) in this function signature shows that the function returns 2 ints
-// here we use the 2 different return values from the call with multiple assignment.
-
-//if you only want a subset of the returned values, use the blank identifier _.
