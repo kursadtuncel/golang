@@ -308,4 +308,193 @@ string ""
 
 ```
 
-__
+# Control Statements and Functions
+## if
+
+```golang
+// go'da if kullanırken paranteze gerek yoktur.
+if x > 10 {
+    fmt.Println("x is greater than 10")
+} else {
+    fmt.Println("x is less than equal to 10")
+}
+```
+Go'da if ile ilgili en kullanışlı şey, if'den önce başlatma ifadesi tanımlayabilmemizdir.
+(Yalnızca if bloğunun içinde kullanılabilir.)
+
+```golang
+if x := computedValue(); x > 10{
+    fmt.Println("x is the greater than 10")
+} else {
+    fmt.Println("x is less than 10")
+}
+
+fmt.Println(x)
+```
+```golang
+if integer == 3 {
+    fmt.Println("the integer is equal to 3")
+} else if integer < 3 {
+    fmt.Println("the integer is less than 3")
+} else {
+    fmt.Println("the integer is greater than 3")
+}
+```
+
+
+## goto
+goto, kontrol akışını daha önce tanımlanmış bir etikete yönlendirir. Ancak aynı kod bloğu içerisinde kullanılırken dikkatli olmalısınız.
+
+```golang
+func myFunc() {
+    i := 0
+    Here: // etiket : ile bitiyor
+    fmt.Println(i)
+    i++
+    goto Here 
+    // etiket adı büyük-küçük harflere duyarlıdır
+}
+```
+## for
+```golang
+for expresssion1; expression2; expression3 {
+    //...
+}
+```
+
+Burada expression1 ve expression3 değişken tanımları ve fonksiyondan dönen değerlerdir ve expression2 bir koşullu ifadedir. expression1 döngüden önce bir kez yürütülecek, expression3 ise her döngüden sonra yürütülecektir.
+
+```golang
+package main
+
+import "fmt"
+
+func main(){
+    sum := 0;
+    for index:=0; index < 10 ; index++{
+        sum += index
+    }
+    fmt.Println("sum is equal to ", sum)
+    // sum is equal to 45
+}
+```
+
+- Birden fazla atamaya ihtiyaç duyarsak, Go'da bunun operatörü yoktur. Bu nedenle i, j =
+i + 1, j - 1 gibi paralel atamalar kullanırız.
+gerekli değilse expression1 ve expression3'ü atlayabiliriz
+
+```golang
+sum := 1
+for ; sum < 1000; {
+    sum += sum
+}
+```
+;'yi nasıl atladığımızı gördünüz mü? while ile aynı!
+
+```golang
+sum := 1
+for sum < 1000 {
+    sum += sum
+}
+```
+break, continue operatörleri:
+
+```golang
+for index := 10; index>0; index-- {
+    if index == 5{
+        break // veya continue
+    }
+    fmt.Println(index)
+    // break prints 10、9、8、7、6
+    // continue prints 10、9、8、7、6、4、3、2、1
+}
+```
+
+for, range kullanıldığında array, slice, map'ten veri okuyabilir.
+```golang
+for k,v := range map{
+    fmt.Println("map's key: ", k)
+    fmt.Printlln("map's val: ", v)
+}
+```
+
+## switch
+Çok fazla if-else kullanma sorununu çözebilmek adına switch kullanmak yararlı olabilir.
+```golang
+switch sExpr {
+    case expr1:
+    some instructions
+    case expr2:
+    some other instructions
+    case expr3:
+    same other instructions
+    default: 
+    other code
+}
+```
+Koşullar sabit olmak zorunda değildir ve eşleşene kadar işlem yukarıdan aşağıya doğru yürütülür. Ayrıca switch anahtarından sonra bir ifade yoksa, o zaman **true** ile eşleşir.
+
+```golang
+i := 10
+switch i {
+    case 1:
+    fmt.Println("i is equal to 1")
+    case 2,3,4:
+    fmt.Println("i is equal to 2,3,4")
+    case 10:
+    fmt.Println("i is equal to 10")
+    default:
+    fmt.Println("all i know is that i is an integer")
+    // 5. satırda (case 2,3,4:) birçok değer koyduk ve case'in gövdesinin sonuna break eklememize gerek yok. herhangi bir case ile eşleştiğinde switch gövdesinden dışarı atlayacaktır.
+}
+```
+
+Daha fazla case ile eşleşmeye devam etmek istiyorsak, **fallthrough** ifadesini kullanmamız gerekir.
+
+```golang
+integer := 6
+switch integer {
+    case 4:
+        fmt.Println("integer <=4")
+        fallthrough
+        fmt.Println("integer <= 5")
+        fallthrough
+    case 6:
+        fmt.Println("integer <= 6")
+        fallthrough
+    case 7:
+        fmt.Println("integer <= 7")
+        fallthrough
+    case 8:
+        fmt.Println("integer <= 8")
+        fallthrough
+    default:
+        fmt.Println("default case")
+}
+```
+
+Çıktı şöyle olacaktır:
+```
+integer <= 6
+integer <= 7
+integer <= 8
+default case
+```
+# Functions (Fonksiyonlar)
+
+```golang
+func funcName(input1 type1, input2 type2) (output1 type1, output2 type2) {
+    //function body
+    //multi-value return
+    return value1, value2
+}
+```
+
+Yukarıdaki örnekten şu bilgileri çıkarmalıyız:
+- Bir fonksiyon adı tanımlamak için **func** kullanıyoruz.
+- Fonksiyonların sıfır, bir veya birden fazla argümanı vardır. Argüman türü argüman adından sonra gelir ve argümanlar "," ile ayrılır.
+- Fonksiyonlar birden fazla değer döndürebilir.
+- output1 ve output2 adında iki adet dönüş değeri var, bunların isimlerini yazmayıp sadece türlerini kullanabiliriz.
+- Eğer sadece bir tane dönüş değeri varsa ve ismi atladıysak, dönüş değerleri için parantez kullanmamıza gerek yoktur.
+- Fonksiyonun dönüş değerleri yoksa, dönüş parametrelerini tamamen atlayabiliriz.
+- Fonksiyonun dönüş değerleri varsa, return ifadesini fonksiyonun gövdesinde kullanmalıyız.
