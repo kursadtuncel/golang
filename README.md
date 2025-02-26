@@ -242,3 +242,70 @@ Slice için bazı yerleşik fonksiyonlar vardır:
 **Dipnot: append, slice'ın işaret ettiği diziyi değiştirecek ve aynı diziye işaret eden diğer slice'ları da etkileyecektir. Ayrıca slice için yeterli boyut yoksa ((cap-len) == 0), append bu slice için yeni bir dizi döndürür. Bu olduğunda, eski diziye işaret eden diğer slice'lar etkilenmeyecektir.**
 
 ## map
+map içerisindekei **get** ve **set** değerleri slice'a benzer, fakat slice içindeki indeks yalnızca integer olabilirken, map bundan daha fazlasını(string vb.) kullanabilir.
+
+````golang
+var numbers map[string] int
+// map tanımlamanın farklı bir yolu:
+numbers := make(map[string]int)
+numbers["one"] = 1
+numbers["ten"] = 10
+numbers["three"] = 3
+fmt.Println("The third number is: ", numbers["three"])
+````
+### map kullanırken:
+- Map'ler düzensizdir, her yazdırdığımızda farklı sonuçlar elde ederiz. Değerleri indekse göre almak imkansızdır, bu nedenle key kullanmalıyız.
+- Map sabit bir boyuta sahip değildir, yani slice gibi bir referans türüdür.
+- 'len' map için de çalışır, o map'in kaç tane s anahtarına sahip olduğunu döndürür.
+- Değerleri map üzerinden değiştirmek çok kolaydır. Basitçe **numbers["one"]=11** kullanarak anahtarın değerini 11 olarak değiştirebiliriz.
+
+Map değerlerini başlatmak için key:val kullanabiliriz. Map'te anahtarın mevcut olup olmadığını kontrol edebilmek için bazı yöntemleri vardır.
+
+```golang
+// map'teki bir öğeyi silmek için "delete" kullanın.
+rating := map[string]float32 {"C":5, "Go":4.5, "Python":4.5, "C++":2}
+// map'in iki return değeri vardır, ikinci return değeri için key yoksa, false döndürür. aksi halde true döndürür.
+csharpRating, ok := rating["C#"]
+if ok {
+    fmt.Println("C# is in the map and its rating is: ", csharpRating)
+} else {
+    fmt.Println("We have no rating associated with C# in the map")
+}
+
+delete(rating, "C") // c içeren key'i siler
+```
+Yukarıda belirttiğimiz gibi, map bir referans türüdür ve iki map aynı veriye işaret ediyorsa herhangi bir değişiklik ikisini de etkileyecektir.
+
+```golang
+m := make(map[string]string)
+m["Hello"] = "Bonjour"
+m1 := m
+m1["Hello"] = "Salut" // m["Hello"] anahtarı 'salut' olarak değişti
+```
+
+# make, new
+make, map, slice ve channel gibi yerleşik(built-in) modeller için bellek ayırma işlemini gerçekleştirirken, new; türlerin bellek ayırma işlemlerini gerçekleştirir.
+
+new(T) sıfır değerini ayırır, T tipinin belleğine işaret eden bir işaretçi döndürür, T tipinin sıfır değerinin değeri olan bellek adresini de döndürür.
+**new her zaman işaretçi döndürür.**
+make T(args) fonksiyonu new(T) fonksiyonundan farklı amaçlara sahiptir. make, slice, map ve channel için kullanılabilir ve başlangıç değeri olan bir T türü döndürür.
+Bunun nedeni bu üç türün temel verilerinin bunlara işaret etmeden önce başlatılması gerektiğidir. Örneğin slice, temel diziye(underlying array), boyuta ve kapasiteye işaret eden bir işaretçi içerir. Bu veriler başlatılmadan önce, slice 'nil' dir, bu nedenle slice, map ve channel için make; temel verilerini başlatır ve bazı uygun değerleri atar.
+**make sıfırdan farklı değerler döndürür**
+Sıfır değeri boş anlamına gelmez. Çoğu zaman değişkenlerin varsayılan olarak aldığı değerdir.
+
+```golang
+int 0
+int8 0
+int32 0
+int64 0
+uint 0x0
+rune 0 // rune'un asıl türü int32'dir
+byte 0x0 // byte'ın asıl türü uint8'dir
+float32 0 // boyut 4 byte'dır
+float64 0 // boyut 8 byte'dır
+bool false
+string ""
+
+```
+
+__
