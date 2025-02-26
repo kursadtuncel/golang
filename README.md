@@ -163,7 +163,7 @@ Arrays(diziler) şöyle tanımayabiliriz:
 ```golang
 var arr [n]type
 ```
-[n]type'da n array'ın boyutudur, type ise array türüdür. Diğer dillerde olduğu gibi array d eğerlerini almak için [] kullanırız.
+[n]type'da n array'ın boyutudur, type ise array türüdür. Diğer dillerde olduğu gibi array değerlerini almak için [] kullanırız.
 
 ```golang
 var arr [10]int
@@ -175,10 +175,10 @@ fmt.Printf("The last element is %d\n", arr[9])
 // 10. öğenin varsayılan değerini döndürecektir, ki bu sıfırdır.
 ```
 
-Çünkü boyut(length) dizi türünün bir parçası olduğu için [3]int ve [4]int farklı türlerdir, bu nedenle dizilerin boyutunu değiştiremeyiz. Diziler argüman olarak kullanıldığında, fonksiyonlar referanslar yerine kopyalarını alır. Referansları kullanmak istiyorsak Slice kullanmak isteyebilirsiniz. Bu konuya ilerde değineceğiz.
+Çünkü boyut(length) dizi türünün bir parçası olduğu için [3]int ve [4]int farklı türlerdir, bu nedenle dizilerin boyutunu değiştiremeyiz. Diziler argüman olarak kullanıldığında, fonksiyonlar referanslar yerine kopyalarını alır. Referansları kullanmak istiyorsak Slice kullanmak isteyebilirsiniz.
 
 ## slice
-Birçok senaryoda dizi(array) iyi bir tercih olmaz. Özellikle diziyi tanımlarken boyutunun ne olacağını bilmediğimizde. Bu nedenle daha dinamik bir diziye ihtiyacımız vardır. Buna slice denir.
+Birçok senaryoda diziler iyi bir tercih olmayabilir. Özellikle diziyi tanımlarken boyutunun ne olacağını bilmediğimizde. Bu nedenle daha dinamik bir diziye ihtiyacımız vardır. Buna slice denir.
 Slice gerçekten de bir dinamik dizi değildir. Bir referans türüdür. Slice diziye benzer olan ancak boyutları değişken olan temel bir diziyi işaret eder.
 
 ```golang
@@ -256,7 +256,7 @@ fmt.Println("The third number is: ", numbers["three"])
 ### map kullanırken:
 - Map'ler düzensizdir, her yazdırdığımızda farklı sonuçlar elde ederiz. Değerleri indekse göre almak imkansızdır, bu nedenle key kullanmalıyız.
 - Map sabit bir boyuta sahip değildir, yani slice gibi bir referans türüdür.
-- 'len' map için de çalışır, o map'in kaç tane s anahtarına sahip olduğunu döndürür.
+- 'len' map için de çalışır, map'in kaç tane s anahtarına sahip olduğunu döndürür.
 - Değerleri map üzerinden değiştirmek çok kolaydır. Basitçe **numbers["one"]=11** kullanarak anahtarın değerini 11 olarak değiştirebiliriz.
 
 Map değerlerini başlatmak için key:val kullanabiliriz. Map'te anahtarın mevcut olup olmadığını kontrol edebilmek için bazı yöntemleri vardır.
@@ -498,3 +498,302 @@ Yukarıdaki örnekten şu bilgileri çıkarmalıyız:
 - Eğer sadece bir tane dönüş değeri varsa ve ismi atladıysak, dönüş değerleri için parantez kullanmamıza gerek yoktur.
 - Fonksiyonun dönüş değerleri yoksa, dönüş parametrelerini tamamen atlayabiliriz.
 - Fonksiyonun dönüş değerleri varsa, return ifadesini fonksiyonun gövdesinde kullanmalıyız.
+
+```golang
+package main
+
+import "fmt"
+
+// A+B ve A*B nin sonuçlarını döndüreceğiz:
+
+func SumAndProduct(A, B int) (int, int) {
+    return A + B,  A* B
+}
+
+func main(){
+    x := 3
+    y := 4
+
+    xPLUSy, xTIMESy := SumAndProduct(x, y)
+    fmt.Printf("%d + %d = %d\n", x, y, xPLUSy)
+    fmt.Printf("%d * %d = %d\n", x, y, xTIMESy)
+}
+```
+Eğer fonksiyonları paketin dışında kullanacaksak, fonksiyon isimleri büyük harfle başlıyorsa, return için tam ifadeler yazmak daha iyi olur, bu kodları daha okunabilir hale getirir.
+
+```golang
+func SumAndProduct(A,B,int) (add int, multiplied int) {
+    add = A+B
+    multiplied = A*B
+    return
+}
+```
+
+## Variadic Functions (Değişken Fonksiyonlar)
+Go, değişken sayıda argümana sahip fonksiyonları destekler. Bu fonksiyonlara "variadic" denir, bu da fonksiyonun belirsiz sayıda argümana izin verdiği anlamına gelir. 
+
+````
+func myFunc(arg ...int) {}
+````
+
+arg ...int, Go'ya bu değişkenlerin argümanları olan bir fonksiyon olduğunu söyler. 
+
+```golang
+for _, n := range arg {
+    fmt.Printf("And the number is : %d\n", n)
+}
+```
+
+## Pass by value and pointers
+
+Çağırılan fonksiyona bir argüman verdiğimizde, o fonksiyon aslında değişkenlerimizin kopyasını alır, dolayısıyla herhangi bir değişiklik orijinal değişkeni etkilemez.
+
+```golang
+package main
+
+import "fmt"
+
+// a'ya 1 eklediğimiz basit bir fonksiyon:
+func add1(a int) int{
+    a = a+1 //a nın değerini değiştiriyoruz
+    return a //a nın yeni değerini döndürüyoruz
+} 
+
+func main(){
+    x := 3
+    fmt.Println("x = ", x) // x=3 çıktısı verir
+
+    x1 := add1(x) //add1(x)'i çağırır
+
+    fmt.Println("x+1 =", x1) //x+1=4 çıktısı verir
+    fmt.Println("x = ", x) //x = 3 çıktısı verir
+}
+```
+
+Görüldüğü üzere, add1'i x ile çağırdığımız halde x'in başlangıç değeri değişmiyor. Sebebi ise çok basit: add1'i çağırdığımızda ona x'in kendisini değil, bir kopyasını verdik.
+
+Şimdi gerçek x'i fonksiyona nasıl geçirebileceğeimizi anlayalım.
+Burada işaretçileri kullanmamız gerekiyor. Değişkenlerin bellekte sakladığı ve bazı bellek adreslerine sahip olduğunu biliyoruz. Yani, bir değişkenin değerini değiştirmek istiyorsak, bellek adresini değiştirmeliyiz. Bu nedenle add1 fonksiyonu değerini değiştirmek için x'in bellek adresini bilmelidir. Burada fonksiyona %x iletiyoruz ve argümanın türünü *int işaretçi türü olarak değiştiriyoruz. Değerin bir kopyasını değil, işaretçinin bir kopyasını ilettiğimizi unutmayın.
+
+```golang
+package main
+
+import "fmt"
+
+func add1(a *int) int {
+    *a = *a + 1
+    return a
+}
+
+func main() {
+    x := 3
+    fmt.Println("x = ", x)
+    x1 := add1(%x)
+    fmt.Println("x+1 =", x1) // x+1 = 4 çıktısını verir
+    fmt.Println("x =", x) // x = 4 çıktısını verir.
+}
+```
+Şimdi x'in değerini fonksiyonlarda değiştirebiliyoruz.
+
+## defer
+Go'da defer adında çok iyi tasarlanmış bir anahtar sözcük vardır. Bir fonksiyonda birçok defer ifadesi olabilir, program fonksiyonların sonuna kadar yürütüldüğünde bunlar ters sırada yürütülür. Programın bazı kaynak dosyalarını açtığı durumda, fonksiyon hatalarla geri dönebilmeden önce bu dosyaların kapatılması gerekir. Örnek üzerinden inceleyelim:
+
+```golang
+func ReadWrite() bool {
+    file.Open("file")
+    // some code
+    if failureX {
+        file.Close()
+        return false
+    }
+
+    if failureY {
+        file.Close()
+        return false
+    }
+
+    file.Close()
+    return true
+}
+```
+Görüldüğü üzere kodları tekrarlamak zorundayız. defer kullanarak daha temiz ve okunabilir kod yazabiliriz:
+
+```golang
+func ReadWrite() bool{
+    file.Open("file")
+    defer file.Close()
+    if failureX {
+        return false
+    }
+    if failureY {
+        return false
+    }
+    return true
+}
+```
+Birden fazla defer varsa, kodlar ters sırayla yürütülür. Aşağıdaki örnekte 4 3 2 1 0 çıktısı alınır:
+
+```golang
+for i := 0; i < 5; i++ {
+    defer fmt.Printf("%d", i)
+}
+```
+## Functions as values and types
+Go'da fonksiyonlar da birer değişkendir ve bunları tanımlamak için **type** kullanılır.
+Aynı imzaya sahip fonksiyonlar aynı tür olarak görülebilir. 
+
+```golang
+type typeName func(input1 inputType1 , input2 inputType2 [, ...]) (result1 resultType1 [, ...])
+```
+Bu özelliğin avantajı nedir diye soracak olursanız, bunun cevabı fonksiyonları değer olarak geçirmemize izin vermesidir.
+
+```golang
+package main
+
+import "fmt"
+
+type testInt func(int) bool // değişken tipinde bir fonksiyon tanımladık
+
+func isOdd(integer int) bool {
+    return integer%2 != 0
+}
+
+func isEven(integer int) bool {
+    return integer%2 == 0
+}
+
+// 'f' fonksiyonunu başka bir fonksiyona argüman olarak geçiriyoruz
+func filter(slice []int, f testInt) []int {
+    var result []int
+    for _, value := range slice {
+        if f(value) {
+            result = append(result, value)
+        }
+    }
+    return result
+}
+
+var slice = []int{1,2,3,4,5,7}
+
+func main(){
+    odd := filter(slice, isOdd)
+    even := filter(slicee, isEven)
+
+    fmt.Println("slice =", slice)
+    fmt.Println("Odd elements of slice are", odd),
+    fmt.Println("Even elements of slice are", even)
+}
+
+```
+
+Arayüzleri kullandığımızda çok işe yarayacaktır. Örnekte görüldüğü üzere testInt, tür olarak bir fonksiyona sahip bir değişkendir ve filter'in döndürülen değerleri ve argümanları testInt ile aynıdır. Dolayısıyla programlarımızda karmaşık mantığa sahip olabilirken, kodda esnekliği koruyabiliriz.
+
+## Panic and Recover
+Go, Java gibi try-catch yapısına sahip değildir. Go hatalarla başa çıkabilmek için istisnalar yerine panic ve recover kullanır. Ancak panic çok güçlü olmasına rağmen çok fazla kullanmamaya dikkat etmeliyiz.
+Panic programların normal akışını bozup panik durumuna geçmeyi sağlayan yerleşik bir fonksiyondur. "F" fonksiyonu panic'i çağırdığında, "F" çalışmaya devam etmez ancak defer fonksiyonları çalışmaya devam eder. Ardından "F" panik durumunun oluştuğu noktaya geri döner.
+Program tüm bu fonksiyonlar panikle **goroutine**'in ilk seviyesine dönene kadar sonlanmayacaktır. Panic, program içerisinde "panic" çağırılarak üretilebildiği gibi, array erişiminin sınır dışına çıkması gibi bazı hatalar da panic oluşumuna sebep olur.
+
+Recover, goroutine s'i panic durumundan kurtarmak için kullanılan yerleşik bir fonksiyondur. defer fonksiyonlarında recover'ı çağırmak faydalıdır çünkü program panik durumundayken normal fonksiyonlar yürütülmeyecektir. Program panic durumunda ise panic değerlerini yakalar, panic durumunda değilse "nil" değerini alır.
+
+```golang
+var user = os.Getenv("USER")
+
+func init() {
+    if user == "" {
+        panic("no value for $USER")
+    }
+}
+```
+panic durumunu aşağıdaki örnekte olduğu gibi kontrol edebiliriz.
+```golang
+func throwsPanic(f func()) (b bool) {
+    defer func() {
+        if x := recover(); x != nil {
+            b = true
+        }()
+        f() // eğer if panic'e neden olursa, recover devreye girecektir.
+        return
+    }
+}
+```
+
+## main and init functions
+Go'nun main ve init adı verilen iki tutma biçmi vardır; init tüm paketlerde kullanılabilirken, main yalnızca main paketinde kullanılabilir. Bu iki fonksiyonun argümanları olamaz ve değer döndüremezler.
+- Bir pakette birden fazla init fonksiyonu yazabiliriz, ancak her paket için yalnızca bir adet init fonksiyonu yazılması daha doğrudur.
+Go programları main() ve init()'i otomatik olarak çağırır, bu yüzden bizim çağırmamıza gerek kalmaz. Her paket için init fonksiyonu isteğe bağlıdır, ancak main paketinin yalnızca bir tane main fonksiyonu vardır. Programlar main paketinden başlatılır ve yürütülür. main paketi diğer paketleri içe aktarırsa, derleme sırasında içe aktarma gerçekleşir. Bir paket birçok kez içe aktarılırsa, yalnızca bir kez derlenir. Paketler içe aktarıldıktan sonra, programlar içe aktarılan paketlerdeki sabitleri ve değişkenleri başlatır, ardından varsa init fonksiyonu yürütülür ve program bu şekilde devam eder. 
+
+## import
+```golang
+import (
+    "fmt"
+)
+
+fmt.Printline("hello world")
+```
+fmt, Go standart kütüphanesindendir, $GOROOT/pkg içerisinde bulunur. Go, üçüncü taraf paketlerini iki şekilde destekler:
+
+- 1: Göreceli olarak içe aktarma "./model" // paketi aynı dizine yükler, önerilmez
+- 2: Mutlak olarak içe aktarma "shorturl/model" paketi "$GOPATH/pkg/shorturl/model" //önerilir
+
+# struct
+Go'da daha karmaşık bir veri yapısını tek değişkende barındırabilmek için struct kullanılır.
+```golang
+type person struct{
+    name string
+    age int
+}
+```
+
+```golang
+type person struct {
+    name string
+    age int
+}
+
+var P person // p person'un türüdür.
+
+P.name = "Sarah"
+P.age = 25
+fmt.Printf("The person's name is %s\n", P.name)
+```
+
+Struct tanımlamanın 3 ayrı yolu daha vardır:
+
+```
+- P := person{"Tom", 25}
+- P := person{age:24, name:"Bob"}
+- P := struct{name string; age int}{"Amy", 18}
+```
+
+```golang
+package main
+
+import "fmt"
+
+type person struct {
+    name string
+    age int
+}
+
+func Older(p1, p2 person) (person, int) {
+    if p1.age > p2.age {
+        return p1, p1.age - p2.age
+    }
+    return p2, p2.age - p1.age
+}
+
+func main() {
+    var tom person
+    tom.name, tom.age = "Tom", 18
+    bob := person{age:25, name: "Bob"}
+    paul := person{"Paul", 43}
+
+    tb_Older, tb_diff := Older(tom, bob)
+    tb_Older, tb_diff := Older(tom, paul)
+    bp_Older, bp_diff := Older(bob, paul)
+    
+    fmt.Printf("Of %s and %s, %s is older by %d years\n", tom.name, bob.name, tb_Older.name, tb_diff)
+    fmt.Printf("Of %s and %s, %s is older by %d years\n", tom.name, paul.name, tp_Older.name, tp_diff)
+    fmt.Printf("Of %s and %s, %s is older by %d years\n", bob.name, paul.name, bp_Older.name, bp_diff)
+}
+```
