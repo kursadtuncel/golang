@@ -21,11 +21,15 @@ func main() {
 		channel2 <- "world"
 	}()
 
-	select {
-	case data1 = <-channel1:
-		fmt.Println("Receiveed data from channel1", data1)
-	case data2 = <-channel2:
-		fmt.Println("Received data from channel 2", data2)
+	for len(data1) == 0 || len(data2) == 0 {
+		select {
+		case data1 = <-channel1:
+			fmt.Println("Receiveed data from channel1", data1)
+		case data2 = <-channel2:
+			fmt.Println("Received data from channel 2", data2)
+		default:
+			fmt.Println("no data came")
+		}
+		time.Sleep(1 * time.Second)
 	}
-
 }
